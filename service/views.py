@@ -1,4 +1,6 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
+from django.views import generic
 
 from service.models import Customer, Car, Order
 
@@ -19,3 +21,13 @@ def index(request):
     }
 
     return render(request, "service/index.html", context=context)
+
+
+class CarListView(LoginRequiredMixin, generic.ListView):
+    model = Car
+    paginate_by = 5
+    queryset = Car.objects.all().prefetch_related("customers")
+
+
+class CarDetailView(LoginRequiredMixin, generic.DetailView):
+    model = Car

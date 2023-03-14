@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>
+    {{ car.model }}
+{#    <a href="{% url ':car-delete' pk=car.id %}" class="btn btn-danger link-to-page">#}
+{#      Delete#}
+{#    </a>#}
+{##}
+{#    <a href="{% url ':car-update' pk=car.id %}" class="btn btn-secondary link-to-page">#}
+{#      Update#}
+{#    </a>#}
+  </h1>
+  <p>Registration number: {{ car.registration_number }} VIN: {{ car.VIN }}</p>
+  <h4>
+    Customer
+{#    {% if user in car.customers.all %}#}
+{#      <a href="{% url ':add-delete-driver' pk=car.id %}" class="btn btn-danger link-to-page">#}
+{#        Delete me from this car#}
+{#      </a>#}
+{#    {% else %}#}
+{#      <a href="{% url ':add-delete-driver' pk=car.id %}" class="btn btn-success link-to-page">#}
+{#        Assign me to this car#}
+{#      </a>#}
+{#    {% endif %}#}
+  </h4>
+  <hr>
+  <ul>
+    {% for customer in car.customers.all %}
+      <li>{{ customer.username }} ({{ customer.first_name }} {{ customer.last_name }})</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

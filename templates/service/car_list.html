@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>
+    Car list
+{#    <a href="{% url 'service:car-create' %}" class="btn btn-primary link-to-page">#}
+{#      Create#}
+{#    </a>#}
+  </h1>
+  {% if car_list %}
+    <ul>
+      {% for car in car_list %}
+        <li>
+          <a
+            href="{% url 'service:car-detail' pk=car.id %} ">{{ car.id }}
+            {{ car.model }} ({{ car.registration_number }})
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>There are no cars in service</p>
+  {% endif %}
+{% endblock %}
