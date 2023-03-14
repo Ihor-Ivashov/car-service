@@ -23,7 +23,7 @@ class Car(models.Model):
 
 
 class Customer(AbstractUser):
-    cars = models.ManyToManyField(Car, related_name="cars")
+    cars = models.ManyToManyField(Car, related_name="customers")
 
     class Meta:
         verbose_name = "customer"
@@ -49,8 +49,16 @@ class Part(models.Model):
 
 class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
-    customer = models.ForeignKey(get_user_model(), on_delete=models.PROTECT)
-    car = models.ForeignKey(Car, on_delete=models.PROTECT)
+    customer = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.PROTECT,
+        related_name="orders"
+    )
+    car = models.ForeignKey(
+        Car,
+        on_delete=models.PROTECT,
+        related_name="orders"
+    )
 
     class Meta:
         ordering = ["-created_at"]
@@ -60,7 +68,11 @@ class Order(models.Model):
 
 
 class OrderRow(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.PROTECT)
+    order = models.ForeignKey(
+        Order,
+        on_delete=models.PROTECT,
+        related_name="order_rows"
+    )
     part = models.ForeignKey(Part, on_delete=models.PROTECT)
     quantity = models.DecimalField(max_digits=8, decimal_places=3)
     sum = models.DecimalField(max_digits=8, decimal_places=2)
