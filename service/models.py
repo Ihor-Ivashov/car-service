@@ -64,6 +64,7 @@ class Order(models.Model):
         on_delete=models.PROTECT,
         related_name="orders"
     )
+    mileage = models.IntegerField()
 
     class Meta:
         ordering = ["-created_at"]
