@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>
+    {{ part.name }}
+    <a href="{% url 'service:part-delete' pk=part.id %}" class="btn btn-danger link-to-page">
+      Delete
+    </a>
+
+    <a href="{% url 'service:part-update' pk=part.id %}" class="btn btn-secondary link-to-page">
+      Update
+    </a>
+  </h1>
+  <p>Measure: {{ part.measure }}</p>
+{% endblock %}

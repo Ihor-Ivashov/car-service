@@ -6,3 +6,13 @@ body {
     float: right;
     margin: 0 2px 0 2px;
 }
+
+.a-update {
+    color: green;
+    font-weight: bold;
+}
+
+.a-delete {
+    color: red;
+    font-weight: bold;
+}

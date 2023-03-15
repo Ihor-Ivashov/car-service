@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>
+    Parts list
+    <a href="{% url 'service:part-create' %}" class="btn btn-primary link-to-page">
+      +
+    </a>
+  </h1>
+  {% if part_list %}
+    <ul>
+      {% for part in part_list %}
+        <li>
+          <a
+            href="{% url 'service:part-detail' pk=part.id %} ">
+            {{ part.name }} ({{ part.measure }})
+          </a>
+          <a class="a-update"
+            href="{% url 'service:part-update' pk=part.id %} ">
+            Update
+          </a>
+          <a class="a-delete"
+            href="{% url 'service:part-delete' pk=part.id %} ">
+            Delete
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>There are no parts in service</p>
+  {% endif %}
+{% endblock %}
