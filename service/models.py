@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.db.models import UniqueConstraint
+from django.urls import reverse
 
 
 class Car(models.Model):
@@ -17,9 +18,13 @@ class Car(models.Model):
                 name="unique_registration_number"
             )
         ]
+        ordering = ["model"]
 
     def __str__(self):
         return f"{self.model} - {self.registration_number}"
+
+    def get_absolute_url(self):
+        return reverse("service:car-detail", kwargs={"pk": self.pk})
 
 
 class Customer(AbstractUser):
