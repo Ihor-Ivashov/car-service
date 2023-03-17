@@ -3,8 +3,9 @@ from django.urls import path
 from service.views import (
     index, CarListView, CarDetailView, CarCreateView, CarUpdateView,
     CarDeleteView, PartListView, PartDetailView, PartCreateView,
-    PartUpdateView, PartDeleteView
+    PartUpdateView, PartDeleteView, CustomerListView, CustomerDetailView
 )
+
 
 urlpatterns = [
     path("", index, name="index"),
@@ -25,6 +26,12 @@ urlpatterns = [
         "parts/<int:pk>/delete/",
         PartDeleteView.as_view(),
         name="part-delete"
+    ),
+    path("customers/", CustomerListView.as_view(), name="customer-list"),
+    path(
+        "customers/<int:pk>/",
+        CustomerDetailView.as_view(),
+        name="customer-detail"
     ),
 ]
 

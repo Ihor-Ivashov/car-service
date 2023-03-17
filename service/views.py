@@ -73,3 +73,12 @@ class PartUpdateView(LoginRequiredMixin, generic.UpdateView):
 class PartDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Part
     success_url = reverse_lazy("service:part-list")
+
+
+class CustomerListView(LoginRequiredMixin, generic.ListView):
+    model = Customer
+    paginate_by = 12
+
+
+class CustomerDetailView(LoginRequiredMixin, generic.DetailView):
+    model = Customer
