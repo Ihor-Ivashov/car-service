@@ -31,11 +31,13 @@ class Customer(AbstractUser):
     cars = models.ManyToManyField(Car, related_name="customers")
 
     class Meta:
-        verbose_name = "customer"
-        verbose_name_plural = "customers"
+        ordering = ["-is_staff", "username"]
 
     def __str__(self):
         return f"{self.username} ({self.first_name} {self.last_name})"
+
+    def get_absolute_url(self):
+        return reverse("service:customer-detail", kwargs={"pk": self.pk})
 
 
 class Part(models.Model):
