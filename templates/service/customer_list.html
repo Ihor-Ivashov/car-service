@@ -3,7 +3,7 @@
 {% block content %}
   <h1>
       Customers List
-{#        <a href="{% url 'service:customer-create' %}" class="btn btn-primary link-to-page">+</a>#}
+        <a href="{% url 'service:customer-create' %}" class="btn btn-primary link-to-page">+</a>
   </h1>
 
   {% if customer_list %}
@@ -18,8 +18,8 @@
     <tr>
       <td>{{ customer.id }}</td>
       <td><a href="{{ customer.get_absolute_url }}">{{ customer.username }}</a></td>
-      <td>{{ driver.first_name }}</td>
-      <td>{{ driver.last_name }}</td>
+      <td>{{ customer.first_name }}</td>
+      <td>{{ customer.last_name }}</td>
     </tr>
   {% endfor %}
   </table>
