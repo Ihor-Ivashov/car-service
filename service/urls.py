@@ -3,7 +3,8 @@ from django.urls import path
 from service.views import (
     index, CarListView, CarDetailView, CarCreateView, CarUpdateView,
     CarDeleteView, PartListView, PartDetailView, PartCreateView,
-    PartUpdateView, PartDeleteView, CustomerListView, CustomerDetailView
+    PartUpdateView, PartDeleteView, CustomerListView, CustomerDetailView,
+    CustomerCreateView, CustomerUpdateView
 )
 
 
@@ -32,6 +33,16 @@ urlpatterns = [
         "customers/<int:pk>/",
         CustomerDetailView.as_view(),
         name="customer-detail"
+    ),
+    path(
+        "customers/create/",
+        CustomerCreateView.as_view(),
+        name="customer-create"
+    ),
+    path(
+        "customers/<int:pk>/update/",
+        CustomerUpdateView.as_view(),
+        name="customer-update"
     ),
 ]
 

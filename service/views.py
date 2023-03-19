@@ -1,8 +1,11 @@
+from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 
+from service.forms import CustomerForm, CustomerUpdateForm
 from service.models import Customer, Car, Order, Part
 
 
@@ -82,3 +85,23 @@ class CustomerListView(LoginRequiredMixin, generic.ListView):
 
 class CustomerDetailView(LoginRequiredMixin, generic.DetailView):
     model = Customer
+
+
+class CustomerCreateView(LoginRequiredMixin, generic.CreateView):
+    model = get_user_model()
+    form_class = CustomerForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["cars_list"] = Car.objects.prefetch_related("customers").filter(customers=None)
+        return context
+
+
+class CustomerUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = get_user_model()
+    form_class = CustomerUpdateForm
+
+    def get_form_kwargs(self):
+        kwargs = super(CustomerUpdateView, self).get_form_kwargs()
+        kwargs.update(self.kwargs)
+        return kwargs
