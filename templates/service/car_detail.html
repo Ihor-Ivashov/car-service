@@ -3,11 +3,12 @@
 {% block content %}
   <h1>
     {{ car.model }}
-    <a href="{% url 'service:car-update' pk=car.id %}" class="btn btn-secondary link-to-page">
-      Update
-    </a>
     <a href="{% url 'service:car-delete' pk=car.id %}" class="btn btn-danger link-to-page">
       Delete
+    </a>
+
+    <a href="{% url 'service:car-update' pk=car.id %}" class="btn btn-secondary link-to-page">
+      Update
     </a>
   </h1>
   <p>Registration number: {{ car.registration_number }}   VIN: {{ car.VIN }}</p>

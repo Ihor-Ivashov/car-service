@@ -3,13 +3,13 @@
 {% block content %}
   <h1>
     Username: {{ customer.username }}
+    <a href="{% url 'service:customer-delete' pk=customer.id %}" class="btn btn-danger link-to-page">
+      Delete
+    </a>
 
     <a href="{% url 'service:customer-update' pk=customer.id %}" class="btn btn-secondary link-to-page">
       Update
     </a>
-{#    <a href="{% url 'service:custome' pk=car.id %}" class="btn btn-danger link-to-page">#}
-{#      Delete#}
-{#    </a>#}
   </h1>
 
   <p><strong>First name:</strong> {{ customer.first_name }}</p>

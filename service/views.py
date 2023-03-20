@@ -105,3 +105,8 @@ class CustomerUpdateView(LoginRequiredMixin, generic.UpdateView):
         kwargs = super(CustomerUpdateView, self).get_form_kwargs()
         kwargs.update(self.kwargs)
         return kwargs
+
+
+class CustomerDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = get_user_model()
+    success_url = reverse_lazy("service:customer-list")

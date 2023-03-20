@@ -4,7 +4,7 @@ from service.views import (
     index, CarListView, CarDetailView, CarCreateView, CarUpdateView,
     CarDeleteView, PartListView, PartDetailView, PartCreateView,
     PartUpdateView, PartDeleteView, CustomerListView, CustomerDetailView,
-    CustomerCreateView, CustomerUpdateView
+    CustomerCreateView, CustomerUpdateView, CustomerDeleteView
 )
 
 
@@ -43,6 +43,11 @@ urlpatterns = [
         "customers/<int:pk>/update/",
         CustomerUpdateView.as_view(),
         name="customer-update"
+    ),
+    path(
+        "customers/<int:pk>/delete/",
+        CustomerDeleteView.as_view(),
+        name="customer-delete"
     ),
 ]
 
