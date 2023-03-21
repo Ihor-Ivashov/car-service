@@ -74,11 +74,14 @@ class Order(models.Model):
     def __str__(self):
         return f"#{self.id} - {self.created_at}"
 
+    def get_absolute_url(self):
+        return reverse("service:order-detail", kwargs={"pk": self.pk})
+
 
 class OrderRow(models.Model):
     order = models.ForeignKey(
         Order,
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
         related_name="order_rows"
     )
     part = models.ForeignKey(Part, on_delete=models.PROTECT)
