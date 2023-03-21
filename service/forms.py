@@ -2,9 +2,9 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 
 from django import forms
-from django.db.models import Count, Q
+from django.db.models import Q
 
-from service.models import Car, Customer
+from service.models import Car
 
 
 class CustomerForm(UserCreationForm):
@@ -47,3 +47,41 @@ class CustomerUpdateForm(forms.ModelForm):
             "last_name",
             "cars",
         )
+
+
+class CarsSearchForm(forms.Form):
+    search_string = forms.CharField(
+        max_length=255,
+        required=False,
+        label="",
+        widget=forms.TextInput(
+            attrs={"placeholder": "Search by model, reg. number, VIN...",
+                   "size": 50}
+        )
+    )
+
+
+class PartsCustomersSearchForm(forms.Form):
+    search_string = forms.CharField(
+        max_length=255,
+        required=False,
+        label="",
+        widget=forms.TextInput(
+            attrs={"placeholder": "Search by name...",
+                   "size": 50}
+        )
+    )
+
+
+class OrdersSearchForm(forms.Form):
+    search_string = forms.CharField(
+        max_length=255,
+        required=False,
+        label="",
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Search by customer name | car reg. number...",
+                "size": 50
+            }
+        )
+    )
