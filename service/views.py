@@ -1,12 +1,14 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Q
+from django.db.models import Q, QuerySet
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views import generic
 
-from service.forms import CustomerForm, CustomerUpdateForm
-from service.models import Customer, Car, Order, Part
+from service.forms import (CustomerForm, CustomerUpdateForm, CarsSearchForm,
+                           PartsCustomersSearchForm, OrdersSearchForm)
+from service.models import (Customer, Car, Order, Part, OrderRow)
 
 
 def index(request):
@@ -29,8 +31,25 @@ def index(request):
 
 class CarListView(LoginRequiredMixin, generic.ListView):
     model = Car
-    paginate_by = 12
-    queryset = Car.objects.all().prefetch_related("customers")
+
+    def get_context_data(self, *, object_list=None, **kwargs) -> dict:
+        context = super(CarListView, self).get_context_data(**kwargs)
+        search_string = self.request.GET.get("search_string")
+        context["search_form"] = CarsSearchForm(
+            initial={"search_string": search_string}
+        )
+        return context
+
+    def get_queryset(self) -> QuerySet:
+        queryset = Car.objects.all().prefetch_related("customers")
+        search_string = self.request.GET.get("search_string", "")
+        if search_string:
+            return queryset.filter(
+                Q(model__icontains=search_string)
+                | Q(registration_number__icontains=search_string)
+                | Q(VIN__icontains=search_string)
+            )
+        return queryset
 
 
 class CarDetailView(LoginRequiredMixin, generic.DetailView):
@@ -54,7 +73,21 @@ class CarDeleteView(LoginRequiredMixin, generic.DeleteView):
 
 class PartListView(LoginRequiredMixin, generic.ListView):
     model = Part
-    paginate_by = 12
+
+    def get_context_data(self, *, object_list=None, **kwargs) -> dict:
+        context = super(PartListView, self).get_context_data(**kwargs)
+        search_string = self.request.GET.get("search_string")
+        context["search_form"] = PartsCustomersSearchForm(
+            initial={"search_string": search_string}
+        )
+        return context
+
+    def get_queryset(self) -> QuerySet:
+        queryset = Part.objects.all()
+        search_string = self.request.GET.get("search_string", "")
+        if search_string:
+            return queryset.filter(name__icontains=search_string)
+        return queryset
 
 
 class PartDetailView(LoginRequiredMixin, generic.DetailView):
@@ -80,7 +113,25 @@ class PartDeleteView(LoginRequiredMixin, generic.DeleteView):
 
 class CustomerListView(LoginRequiredMixin, generic.ListView):
     model = Customer
-    paginate_by = 12
+
+    def get_context_data(self, *, object_list=None, **kwargs) -> dict:
+        context = super(CustomerListView, self).get_context_data(**kwargs)
+        search_string = self.request.GET.get("search_string")
+        context["search_form"] = PartsCustomersSearchForm(
+            initial={"search_string": search_string}
+        )
+        return context
+
+    def get_queryset(self) -> QuerySet:
+        queryset = Customer.objects.all()
+        search_string = self.request.GET.get("search_string", "")
+        if search_string:
+            return queryset.filter(
+                Q(username__icontains=search_string)
+                | Q(first_name__icontains=search_string)
+                | Q(last_name__icontains=search_string)
+            )
+        return queryset
 
 
 class CustomerDetailView(LoginRequiredMixin, generic.DetailView):
@@ -90,11 +141,6 @@ class CustomerDetailView(LoginRequiredMixin, generic.DetailView):
 class CustomerCreateView(LoginRequiredMixin, generic.CreateView):
     model = get_user_model()
     form_class = CustomerForm
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["cars_list"] = Car.objects.prefetch_related("customers").filter(customers=None)
-        return context
 
 
 class CustomerUpdateView(LoginRequiredMixin, generic.UpdateView):
@@ -110,3 +156,71 @@ class CustomerUpdateView(LoginRequiredMixin, generic.UpdateView):
 class CustomerDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = get_user_model()
     success_url = reverse_lazy("service:customer-list")
+
+
+class OrderListView(LoginRequiredMixin, generic.ListView):
+    model = Order
+
+    def get_context_data(self, *, object_list=None, **kwargs) -> dict:
+        context = super(OrderListView, self).get_context_data(**kwargs)
+        search_string = self.request.GET.get("search_string")
+        context["search_form"] = OrdersSearchForm(
+            initial={"search_string": search_string}
+        )
+        return context
+
+    def get_queryset(self) -> QuerySet:
+        queryset = Order.objects.all().select_related("customer", "car")
+        search_string = self.request.GET.get("search_string", "")
+        if search_string:
+            return queryset.filter(
+                Q(customer__username__icontains=search_string)
+                | Q(customer__first_name__icontains=search_string)
+                | Q(customer__last_name__icontains=search_string)
+                | Q(car__registration_number__icontains=search_string)
+            )
+        return queryset
+
+
+class OrderDetailView(LoginRequiredMixin, generic.DetailView):
+    model = Order
+
+
+class OrderCreateView(LoginRequiredMixin, generic.CreateView):
+    model = Order
+    fields = "__all__"
+    success_url = reverse_lazy("service:order-list")
+
+
+class OrderUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Order
+    fields = "__all__"
+    success_url = reverse_lazy("service:order-list")
+
+
+class OrderDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Order
+    success_url = reverse_lazy("service:order-list")
+
+
+class OrderRowCreateView(LoginRequiredMixin, generic.CreateView):
+    model = OrderRow
+    fields = "__all__"
+    template_name = "service/order_row_form.html"
+
+    def get_context_data(self, *, object_list=None, **kwargs) -> dict:
+        context = super(OrderRowCreateView, self).get_context_data(**kwargs)
+        context["order"] = Order.objects.get(pk=self.kwargs["pk"])
+        return context
+
+    def get_initial(self):
+        return {"order": self.kwargs["pk"]}
+
+
+def order_row_delete(request, pk):
+    row = OrderRow.objects.get(pk=pk)
+    order_id = row.order_id
+    row.delete()
+    return HttpResponseRedirect(
+        reverse("service:order-detail", kwargs={"pk": order_id})
+    )

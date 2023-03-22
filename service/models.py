@@ -90,3 +90,6 @@ class OrderRow(models.Model):
 
     def __str__(self):
         return f"{self.part} - {self.quantity} = {self.sum}"
+
+    def get_absolute_url(self):
+        return reverse("service:order-detail", kwargs={"pk": self.order.pk})

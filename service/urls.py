@@ -4,7 +4,9 @@ from service.views import (
     index, CarListView, CarDetailView, CarCreateView, CarUpdateView,
     CarDeleteView, PartListView, PartDetailView, PartCreateView,
     PartUpdateView, PartDeleteView, CustomerListView, CustomerDetailView,
-    CustomerCreateView, CustomerUpdateView, CustomerDeleteView
+    CustomerCreateView, CustomerUpdateView, CustomerDeleteView, OrderListView,
+    OrderDetailView, OrderCreateView, OrderRowCreateView, OrderDeleteView,
+    OrderUpdateView, order_row_delete
 )
 
 
@@ -48,6 +50,33 @@ urlpatterns = [
         "customers/<int:pk>/delete/",
         CustomerDeleteView.as_view(),
         name="customer-delete"
+    ),
+    path("orders/", OrderListView.as_view(), name="order-list"),
+    path("orders/<int:pk>/", OrderDetailView.as_view(), name="order-detail"),
+    path(
+        "orders/create/",
+        OrderCreateView.as_view(),
+        name="order-create"
+    ),
+    path(
+        "orders/<int:pk>/update/",
+        OrderUpdateView.as_view(),
+        name="order-update"
+    ),
+    path(
+        "orders/<int:pk>/delete/",
+        OrderDeleteView.as_view(),
+        name="order-delete"
+    ),
+    path(
+        "order_row/<int:pk>/create/",
+        OrderRowCreateView.as_view(),
+        name="order-row-create"
+    ),
+    path(
+        "order_row/<int:pk>/delete/",
+        order_row_delete,
+        name="order-row-delete"
     ),
 ]
 
