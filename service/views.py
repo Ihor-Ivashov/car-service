@@ -1,7 +1,8 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q, QuerySet
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseBadRequest, \
+    JsonResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views import generic
@@ -224,3 +225,22 @@ def order_row_delete(request, pk):
     return HttpResponseRedirect(
         reverse("service:order-detail", kwargs={"pk": order_id})
     )
+
+
+def get_customer_cars(request):
+    if request.method == 'POST':
+        customer_id = request.POST.get("customer_field")
+        # field1_value = some_function(field2_value)
+
+        cars = []
+        queryset = Car.objects.filter(customers__id=int(customer_id))
+        for car in queryset:
+            cars.append({
+                "id": car.id,
+                "name": car.model
+            })
+
+        response_data = {"cars": cars}
+        return JsonResponse(response_data)
+    else:
+        return HttpResponseBadRequest()
