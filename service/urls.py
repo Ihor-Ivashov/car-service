@@ -6,7 +6,7 @@ from service.views import (
     PartUpdateView, PartDeleteView, CustomerListView, CustomerDetailView,
     CustomerCreateView, CustomerUpdateView, CustomerDeleteView, OrderListView,
     OrderDetailView, OrderCreateView, OrderRowCreateView, OrderDeleteView,
-    OrderUpdateView, order_row_delete, get_customer_cars
+    OrderUpdateView, order_row_delete, get_customer_cars, login_view
 )
 
 
@@ -79,6 +79,7 @@ urlpatterns = [
         name="order-row-delete"
     ),
     path("get_customer_cars/", get_customer_cars, name="get-customer-cars"),
+    path("accounts/login/", login_view, name="login"),
 ]
 
 app_name = "service"

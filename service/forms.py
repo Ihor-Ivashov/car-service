@@ -7,6 +7,23 @@ from django.db.models import Q
 from service.models import Car
 
 
+class LoginForm(forms.Form):
+    username = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Username",
+                "class": "form-control"
+            }
+        ))
+    password = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                "placeholder": "Password",
+                "class": "form-control"
+            }
+        ))
+
+
 class CustomerForm(UserCreationForm):
     cars = forms.ModelMultipleChoiceField(
         queryset=Car.objects.filter(customers=None),

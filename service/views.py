@@ -1,14 +1,15 @@
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q, QuerySet
 from django.http import HttpResponseRedirect, HttpResponseBadRequest, \
     JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views import generic
 
 from service.forms import (CustomerForm, CustomerUpdateForm, CarsSearchForm,
-                           PartsCustomersSearchForm, OrdersSearchForm)
+                           PartsCustomersSearchForm, OrdersSearchForm,
+                           LoginForm)
 from service.models import (Customer, Car, Order, Part, OrderRow)
 
 
@@ -249,3 +250,25 @@ def get_customer_cars(request):
         return JsonResponse(response_data)
     else:
         return HttpResponseBadRequest()
+
+
+def login_view(request):
+    form = LoginForm(request.POST or None)
+
+    msg = None
+
+    if request.method == "POST":
+
+        if form.is_valid():
+            username = form.cleaned_data.get("username")
+            password = form.cleaned_data.get("password")
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect("/")
+            else:
+                msg = 'Invalid credentials'
+        else:
+            msg = 'Error validating the form'
+
+    return render(request, "registration/login.html", {"form": form, "msg": msg})
