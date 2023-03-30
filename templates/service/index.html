@@ -1,18 +1,90 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>Car Service Home</h1>
-  <p>Welcome to Best Car service Ever!</p>
-  <h2>Dynamic content</h2>
-  <p>The Car service has the following record counts:</p>
-  <ul>
-    <li><strong>Cars:</strong> {{ num_cars }}</li>
-    <li><strong>Customers:</strong> {{ num_customers }}</li>
-    <li><strong>Orders:</strong> {{ num_orders }}</li>
-  </ul>
+  <div class="header pb-7 d-flex align-items-center"
+       style="min-height: 500px; background-image: url(/static/img/bg-car-cover.jpg); background-size: cover; background-position: center top;">
+    <!-- Mask -->
+    <span class="mask bg-gradient-dark opacity-6"></span>
+    <!-- Header container -->
+    <div class="container-fluid d-flex align-items-center">
+      <div class="row">
+        <div class="col-lg-7 col-md-10">
+          <h1 class="display-2 text-white pb-3 pt-3">
+            Welcome to 'AutoTech'
+          </h1>
+          <p class="display-4 text-white">
+            your reliable partner for car repair and maintenance
+          </p>
 
-  <p>You have visited this page
-      {{ num_visits }} time{{ num_visits|pluralize }}.
-  </p>
+          <p class="text-white mt-0 mb-5">Our auto service is modern and equipped with the latest equipment, which allows us to provide high-quality repair and diagnostics for various car brands. Our team of professionals has years of experience working with cars and knows how to make sure your car is always in good condition.</p>
+          <p class="text-white mt-0 mb-5">At AutoTech, we understand that your time is valuable, so we always strive to do everything possible to get you back to your normal routine as quickly as possible. We offer fast and quality repairs and guarantee the quality of our work.</p>
+          <p class="text-white mt-0 mb-5">If you need professional and reliable service for your car, turn to AutoTech. Our qualified specialists will be happy to help you with all questions related to car repair and maintenance.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 
+
+  <div class="header pb-6">
+    <div class="container-fluid mt--5">
+      <div class="header-body">
+        <div class="row">
+          <div class="col-xl-3 col-md-6">
+            <div class="card card-stats">
+              <!-- Card body -->
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <h5 class="card-title text-uppercase text-muted mb-0">Total satisfied customers</h5>
+                    <span class="h2 font-weight-bold mb-0">{{ num_customers }}</span>
+                  </div>
+                  <div class="col-auto">
+                    <div class="icon icon-shape bg-gradient-teal text-white rounded-circle shadow">
+                      <i class="ni ni-satisfied"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-md-6">
+            <div class="card card-stats">
+              <!-- Card body -->
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <h5 class="card-title text-uppercase text-muted mb-0">Total repaired cars</h5>
+                    <span class="h2 font-weight-bold mb-0">{{ num_cars }}</span>
+                  </div>
+                  <div class="col-auto">
+                    <div class="icon icon-shape bg-gradient-teal text-white rounded-circle shadow">
+                      <i class="ni ni-ambulance"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-md-6">
+            <div class="card card-stats">
+              <!-- Card body -->
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <h5 class="card-title text-uppercase text-muted mb-0">Total completed orders</h5>
+                    <span class="h2 font-weight-bold mb-0">{{ num_orders }}</span>
+                  </div>
+                  <div class="col-auto">
+                    <div class="icon icon-shape bg-gradient-teal text-white rounded-circle shadow">
+                      <i class="ni ni-archive-2"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}

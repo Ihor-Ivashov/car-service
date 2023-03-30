@@ -230,7 +230,6 @@ def order_row_delete(request, pk):
 def get_customer_cars(request):
     if request.method == 'POST':
         customer_id = request.POST.get("customer_field")
-        # field1_value = some_function(field2_value)
 
         cars = []
         queryset = Car.objects.filter(customers__id=int(customer_id))

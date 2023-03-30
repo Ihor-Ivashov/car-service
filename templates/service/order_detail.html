@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
   <h2>
@@ -48,4 +49,8 @@
     {% endfor %}
     </table>
   </div>
+{% endblock %}
+
+{% block javascripts %}
+  <script type="text/javascript" src="{% static 'js/confirm_delete_row.js' %}"></script>
 {% endblock %}

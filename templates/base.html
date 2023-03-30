@@ -13,30 +13,25 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 
+  <!-- Argon CSS -->
+  <link rel="stylesheet" href="/static/css/argon.css?v=1.2.0" type="text/css">
+  <link rel="stylesheet" href="/static/css/nucleo.css" type="text/css">
+
   <!-- Add additional CSS in static file -->
   {% load static %}
   <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 
-<body>
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-sm-2">
+<body class="bg-light">
+  {% include "includes/sidebar.html" %}
 
-      {% block sidebar %}
-        {% include "includes/sidebar.html" %}
-      {% endblock %}
+  <div class="main-content" id="panel">
 
-    </div>
-    <div class="col-sm-10 ">
+    {% block content %}{% endblock %}
 
-      {% block content %}{% endblock %}
-
-    </div>
   </div>
-</div>
 </body>
 
-<script type="text/javascript" src="{% static 'js/confirm_delete_row.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/customer_cars.js' %}"></script>
+  {% block javascripts %}{% endblock javascripts %}
+
 </html>

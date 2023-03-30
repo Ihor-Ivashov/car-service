@@ -1,15 +1,70 @@
-<ul class="sidebar-nav list-group">
-  {% if user.is_authenticated %}
-    <li class="list-group-item">User: <a href="{{ user.get_absolute_url }}">{{ user.get_username }}</a></li>
-    <li class="list-group-item"><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
-  {% else %}
-    <li class="list-group-item"><a href="{% url 'login'%}?next={{request.path}}">Login</a></li>
-  {% endif %}
+<nav class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white" id="sidenav-main">
+  <div class="scrollbar-inner">
+    <!-- Brand -->
+    <div class="sidenav-header  align-items-center">
+      <a class="navbar-brand" href="/">
+        <img src="/static/img/car-logo.png" class="navbar-brand-img" alt="AutoTech logo">
+      </a>
+    </div>
+    <div class="navbar-inner">
+      <!-- Collapse -->
+      <div class="collapse navbar-collapse" id="sidenav-collapse-main">
+        <ul class="navbar-nav">
+          {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{{ user.get_absolute_url }}">
+                <i class="ni ni-single-02 text-primary"></i>
+                <span class="nav-link-text">User: {{ user.get_username }}</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'logout'%}?next={{request.path}}">
+                <i class="ni ni-user-run text-primary"></i>
+                <span class="nav-link-text">Logout</span>
+              </a>
+            </li>
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'login'%}?next={{request.path}}">
+                <i class="ni ni-key-25 text-primary"></i>
+                <span class="nav-link-text">Login</span>
+              </a>
+            </li>
+          {% endif %}
 
-  <br>
-  <li class="list-group-item"><a href="{% url 'service:index' %}">Home</a></li>
-  <li class="list-group-item"><a href="{% url 'service:car-list' %}">All cars</a></li>
-  <li class="list-group-item"><a href="{% url 'service:part-list' %}">All parts</a></li>
-  <li class="list-group-item"><a href="{% url 'service:customer-list' %}">All customers</a></li>
-  <li class="list-group-item"><a href="{% url 'service:order-list' %}">All orders</a></li>
-</ul>
+          <br>
+          <li class="nav-item">
+            <a class="nav-link {% if 'index' in segment %} active {% endif %}" href="{% url 'service:index' %}">
+              <i class="ni ni-world text-primary"></i>
+              <span class="nav-link-text">Home</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if 'index' in segment %} active {% endif %}" href="{% url 'service:car-list' %}">
+              <i class="ni ni-ambulance text-primary"></i>
+              All cars
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if 'index' in segment %} active {% endif %}" href="{% url 'service:part-list' %}">
+              <i class="ni ni-settings text-primary"></i>
+              All parts
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if 'index' in segment %} active {% endif %}" href="{% url 'service:customer-list' %}">
+              <i class="ni ni-single-02 text-primary"></i>
+              All customers
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if 'index' in segment %} active {% endif %}" href="{% url 'service:order-list' %}">
+              <i class="ni ni-bullet-list-67 text-primary"></i>
+              All orders
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
