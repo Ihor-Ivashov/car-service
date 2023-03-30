@@ -25,6 +25,7 @@ def index(request):
         "num_cars": num_cars,
         "num_orders": num_orders,
         "num_visits": num_visits + 1,
+        "segment": "index"
     }
 
     return render(request, "service/index.html", context=context)
@@ -39,6 +40,7 @@ class CarListView(LoginRequiredMixin, generic.ListView):
         context["search_form"] = CarsSearchForm(
             initial={"search_string": search_string}
         )
+        context["segment"] = "car_list"
         return context
 
     def get_queryset(self) -> QuerySet:
@@ -81,6 +83,7 @@ class PartListView(LoginRequiredMixin, generic.ListView):
         context["search_form"] = PartsCustomersSearchForm(
             initial={"search_string": search_string}
         )
+        context["segment"] = "part_list"
         return context
 
     def get_queryset(self) -> QuerySet:
@@ -121,6 +124,7 @@ class CustomerListView(LoginRequiredMixin, generic.ListView):
         context["search_form"] = PartsCustomersSearchForm(
             initial={"search_string": search_string}
         )
+        context["segment"] = "customer_list"
         return context
 
     def get_queryset(self) -> QuerySet:
@@ -168,6 +172,7 @@ class OrderListView(LoginRequiredMixin, generic.ListView):
         context["search_form"] = OrdersSearchForm(
             initial={"search_string": search_string}
         )
+        context["segment"] = "order_list"
         return context
 
     def get_queryset(self) -> QuerySet:
@@ -212,6 +217,7 @@ class OrderRowCreateView(LoginRequiredMixin, generic.CreateView):
     def get_context_data(self, *, object_list=None, **kwargs) -> dict:
         context = super(OrderRowCreateView, self).get_context_data(**kwargs)
         context["order"] = Order.objects.get(pk=self.kwargs["pk"])
+        context["segment"] = "order_list"
         return context
 
     def get_initial(self):
