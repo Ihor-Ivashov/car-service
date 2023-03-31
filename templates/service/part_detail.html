@@ -1,15 +1,32 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>
-    {{ part.name }}
-    <a href="{% url 'service:part-delete' pk=part.id %}" class="btn btn-danger link-to-page">
-      Delete
-    </a>
 
-    <a href="{% url 'service:part-update' pk=part.id %}" class="btn btn-secondary link-to-page">
-      Update
-    </a>
-  </h1>
-  <p>Measure: {{ part.measure }}</p>
+  <div class="header bg-gradient-dark py-6 py-lg-6">
+    <div class="container-fluid">
+      <div class="header-body text-left mb-7">
+        <div class="row">
+          <div class="col-lg-12 col-md-6">
+            <h1 class="text-white">
+              <a class="text-white" href="">
+                Part: {{ part.name }} ({{ part.measure }})
+              </a>
+              <a href="{% url 'service:part-delete' pk=part.id %}" class="btn btn-danger link-to-page">
+                Delete
+              </a>
+              <a href="{% url 'service:part-update' pk=part.id %}" class="btn btn-primary link-to-page">
+                Update
+              </a>
+            </h1>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="separator separator-bottom separator-skew zindex-100">
+      <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <polygon class="fill-secondary" points="0 0 2560 100 0 100"></polygon>
+      </svg>
+    </div>
+  </div>
+
 {% endblock %}
