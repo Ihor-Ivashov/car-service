@@ -73,7 +73,8 @@ class CarsSearchForm(forms.Form):
         label="",
         widget=forms.TextInput(
             attrs={"placeholder": "Search by model, reg. number, VIN...",
-                   "size": 50}
+                   "size": 50,
+                   "class": "form-control"}
         )
     )
 
