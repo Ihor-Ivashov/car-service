@@ -51,7 +51,6 @@
                 </tr>
               </thead>
 
-
               {% if car_list %}
                 {% for car in car_list %}
                   <tr>
@@ -94,32 +93,6 @@
     </div>
   </div>
 
-
-{#  <h1>#}
-{#    Car list#}
-{#    <a href="{% url 'service:car-create' %}" class="btn btn-primary link-to-page">#}
-{#      +#}
-{#    </a>#}
-{#  </h1>#}
-{##}
-{#  {% block search %}#}
-{#    {% include "includes/search_form.html" %}#}
-{#  {% endblock %}#}
-{##}
-{#  {% if car_list %}#}
-{#    <ul>#}
-{#      {% for car in car_list %}#}
-{#        <li>#}
-{#          <a#}
-{#            href="{% url 'service:car-detail' pk=car.id %} ">#}
-{#            {{ car.model }} ({{ car.registration_number }})#}
-{#          </a>#}
-{#        </li>#}
-{#      {% endfor %}#}
-{#    </ul>#}
-{#  {% else %}#}
-{#    <p>There are no cars in service</p>#}
-{#  {% endif %}#}
 {% endblock %}
 
 {% block javascripts %}
@@ -130,4 +103,3 @@
   <script src="/static/js/jquery-scrollLock.min.js"></script>
   <script src="/static/js/argon.js?v=1.2.0"></script>
 {% endblock %}
-

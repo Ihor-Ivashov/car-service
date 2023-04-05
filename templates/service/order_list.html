@@ -1,35 +1,118 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>
-      Orders List
-        <a href="{% url 'service:order-create' %}" class="btn btn-primary link-to-page">+</a>
-  </h1>
 
-  {% block search %}
-    {% include "includes/search_form.html" %}
-  {% endblock %}
+  <div class="header bg-gradient-dark py-6 py-lg-5">
+    <div class="container-fluid">
+      <div class="header-body text-left mb-8">
+        <div class="row">
+          <div class="col-lg-12 col-md-6">
+            <h1 class="text-white">
+              <a class="text-white" href="">
+                Orders list
+              </a>
+              <a href="{% url 'service:order-create' %}" class="btn btn-primary link-to-page">
+                +
+              </a>
+            </h1>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="separator separator-bottom separator-skew zindex-100">
+      <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <polygon class="fill-secondary" points="0 0 2560 100 0 100"></polygon>
+      </svg>
+    </div>
+  </div>
 
-  {% if order_list %}
-    <table class="table">
-      <tr>
-        <th>ID</th>
-        <th>Date</th>
-        <th>Customer</th>
-        <th>Car</th>
-        <th>Mileage</th>
-      </tr>
-    {% for order in order_list %}
-      <tr>
-        <td>{{ order.id }}</td>
-        <td><a href="{{ order.get_absolute_url }}">{{ order.created_at }}</a></td>
-        <td>{{ order.customer }}</td>
-        <td>{{ order.car }}</td>
-        <td>{{ order.mileage }}</td>
-      </tr>
-    {% endfor %}
-    </table>
-  {% else %}
-    <p>There are no orders.</p>
-  {% endif %}
+  <div class="mt--9">
+    {% block search %}
+      {% include "includes/search_form.html" %}
+    {% endblock %}
+  </div>
+
+  <div class="container-fluid mt--4">
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-header border-0">
+            <h3 class="mb-0">Orders</h3>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table align-items-center table-flush">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col" class="sort" data-sort="ID">ID</th>
+                  <th scope="col" class="sort" data-sort="date">Date</th>
+                  <th scope="col" class="sort" data-sort="customer">Customer</th>
+                  <th scope="col" class="sort" data-sort="car">Car</th>
+                  <th scope="col" class="sort" data-sort="mileage">Mileage</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+
+              {% if order_list %}
+                {% for order in order_list %}
+                  <tr>
+                    <td class="ID">
+                      <span class="text-sm">
+                        {{ order.id }}
+                      </span>
+                    </td>
+                    <td class="date">
+                      <span class="text-sm">
+                        {{ order.created_at }}
+                      </span>
+                    </td>
+                    <td class="customer">
+                      <span class="text-sm">
+                        {{ order.customer }}
+                      </span>
+                    </td>
+                    <td class="car">
+                      <span class="text-sm">
+                        {{ order.car }}
+                      </span>
+                    </td>
+                    <td class="mileage">
+                      <span class="text-sm">
+                        {{ order.mileage }}
+                      </span>
+                    </td>
+
+                    <td class="text-right">
+                      <div class="dropdown">
+                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <i class="fas fa-ellipsis-v"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                          <a class="dropdown-item" href="{% url 'service:order-detail' pk=order.id %}">Detail</a>
+                          <a class="dropdown-item" href="{% url 'service:order-update' pk=order.id %}">Update</a>
+                          <a class="dropdown-item" href="{% url 'service:order-delete' pk=order.id %}">Delete</a>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                {% endfor %}
+              {% else %}
+                <p class="text-center text-primary ">There are no orders</p>
+              {% endif %}
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block javascripts %}
+  <script src="/static/js/jquery.min.js"></script>
+  <script src="/static/js/bootstrap.bundle.min.js"></script>
+  <script src="/static/js/js.cookie.js"></script>
+  <script src="/static/js/jquery.scrollbar.min.js"></script>
+  <script src="/static/js/jquery-scrollLock.min.js"></script>
+  <script src="/static/js/argon.js?v=1.2.0"></script>
 {% endblock %}

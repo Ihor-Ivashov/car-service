@@ -86,7 +86,8 @@ class PartsCustomersSearchForm(forms.Form):
         label="",
         widget=forms.TextInput(
             attrs={"placeholder": "Search by name...",
-                   "size": 50}
+                   "size": 50,
+                   "class": "form-control"}
         )
     )
 
@@ -99,7 +100,8 @@ class OrdersSearchForm(forms.Form):
         widget=forms.TextInput(
             attrs={
                 "placeholder": "Search by customer name | car reg. number...",
-                "size": 50
+                "size": 50,
+                "class": "form-control"
             }
         )
     )
