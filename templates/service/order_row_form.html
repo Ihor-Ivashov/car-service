@@ -1,49 +1,28 @@
-{% extends "base.html" %}
+{% extends "service/order_detail.html" %}
 {% load crispy_forms_filters %}
 
-{% block content %}
-  <h2>
-    Order {{ order.id }} created at {{ order.created_at }}
-  </h2>
-  <h4>
-    Customer: {{ order.customer.first_name }} {{ order.customer.last_name }} ({{ order.customer.username }})
-    <br>
-    Car: {{ order.car }} Mileage: {{ order.mileage }}
-  </h4>
-  <br>
+{% block new_row %}
 
-  <div class="ml-3">
-    <table class="table">
-      <tr>
-        <th>#</th>
-        <th>Part</th>
-        <th>Quantity</th>
-        <th>Sum</th>
-        <th></th>
-      </tr>
-    {% for row in order.order_rows.all %}
-      <tr>
-        <td>{{ row.id }}</td>
-        <td>{{ row.part }}</td>
-        <td>{{ row.quantity }}</td>
-        <td>{{ row.sum }}</td>
-        <td>
-        </td>
-      </tr>
-    {% endfor %}
-    </table>
+  <hr class="my-4" />
+  <form action="" method="post" novalidate>
+    {% csrf_token %}
 
-    <form action="" method="post" novalidate>
-      {% csrf_token %}
+    <div class="pl-lg-1">
       <div class="row">
         {% for field in form %}
-          <div class="col-sm-3">
-          {{ field|as_crispy_field }}
+          <div class="col-lg-3">
+            <div class="form-group">
+              {{ field|as_crispy_field }}
+            </div>
           </div>
         {% endfor %}
+        <div class="col-lg-2">
+          <label class="form-control-label" for="save"></label>
+          <input id="save" type="submit" value="Save" class="btn btn-primary">
+        </div>
       </div>
       <input name="order" type="hidden" value={{ order.id }}>
-      <input type="submit" value="Save" class="btn btn-primary">
-    </form>
-  </div>
+    </div>
+
+  </form>
 {% endblock %}
