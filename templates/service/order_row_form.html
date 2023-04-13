@@ -1,0 +1,28 @@
+{% extends "service/order_detail.html" %}
+{% load crispy_forms_filters %}
+
+{% block new_row %}
+
+  <hr class="my-4" />
+  <form action="" method="post" novalidate>
+    {% csrf_token %}
+
+    <div class="pl-lg-1">
+      <div class="row">
+        {% for field in form %}
+          <div class="col-lg-3">
+            <div class="form-group">
+              {{ field|as_crispy_field }}
+            </div>
+          </div>
+        {% endfor %}
+        <div class="col-lg-2">
+          <label class="form-control-label" for="save"></label>
+          <input id="save" type="submit" value="Save" class="btn btn-primary">
+        </div>
+      </div>
+      <input name="order" type="hidden" value={{ order.id }}>
+    </div>
+
+  </form>
+{% endblock %}

@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  <div class="header bg-gradient-dark py-6 py-lg-5">
+    <div class="container-fluid">
+      <div class="header-body text-left mb-8">
+        <div class="row">
+          <div class="col-lg-12 col-md-6">
+            <h1 class="text-white">
+              <a class="text-white" href="">
+                Parts list
+              </a>
+              <a href="{% url 'service:part-create' %}" class="btn btn-primary link-to-page">
+                +
+              </a>
+            </h1>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="separator separator-bottom separator-skew zindex-100">
+      <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <polygon class="fill-secondary" points="0 0 2560 100 0 100"></polygon>
+      </svg>
+    </div>
+  </div>
+
+  <div class="mt--9">
+    {% block search %}
+      {% include "includes/search_form.html" %}
+    {% endblock %}
+  </div>
+
+  <div class="container-fluid mt--4">
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-header border-0">
+            <h3 class="mb-0">Parts</h3>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table align-items-center table-flush">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col" class="sort" data-sort="part">Part</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+
+              {% if part_list %}
+                {% for part in part_list %}
+                  <tr>
+                    <td>
+                      <div class="media-body">
+                        <span class="part mb-0 text-sm">{{ part.name }} ({{ part.measure }})</span>
+                      </div>
+                    </td>
+                    <td class="text-right">
+                      <div class="dropdown">
+                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <i class="fas fa-ellipsis-v"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                          <a class="dropdown-item" href="{% url 'service:part-detail' pk=part.id %}">Detail</a>
+                          <a class="dropdown-item" href="{% url 'service:part-update' pk=part.id %}">Update</a>
+                          <a class="dropdown-item" href="{% url 'service:part-delete' pk=part.id %}">Delete</a>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                {% endfor %}
+              {% else %}
+                <p class="text-center text-primary ">There are no parts in service</p>
+              {% endif %}
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block javascripts %}
+  <script src="/static/js/jquery.min.js"></script>
+  <script src="/static/js/bootstrap.bundle.min.js"></script>
+  <script src="/static/js/js.cookie.js"></script>
+  <script src="/static/js/jquery.scrollbar.min.js"></script>
+  <script src="/static/js/jquery-scrollLock.min.js"></script>
+  <script src="/static/js/argon.js?v=1.2.0"></script>
+{% endblock %}

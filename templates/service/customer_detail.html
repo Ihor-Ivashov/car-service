@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  <div class="header bg-gradient-dark py-6 py-lg-5">
+    <div class="container-fluid">
+      <div class="header-body text-left mb-7">
+        <div class="row">
+          <div class="col-lg-12 col-md-6">
+            <h1 class="text-white">
+              <a class="text-white" href="">
+                {{ customer.first_name }} {{ customer.last_name }} ({{ customer.username }})
+              </a>
+              <a href="{% url 'service:customer-delete' pk=customer.id %}" class="btn btn-danger link-to-page">
+                Delete
+              </a>
+              <a href="{% url 'service:customer-update' pk=customer.id %}" class="btn btn-primary link-to-page">
+                Update
+              </a>
+            </h1>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="separator separator-bottom separator-skew zindex-100">
+      <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <polygon class="fill-secondary" points="2560 0 2560 100 0 100"></polygon>
+      </svg>
+    </div>
+  </div>
+
+  <div class="container-fluid mt--8">
+    <div class="col-xl-12 order-xl-1">
+      <div class="card">
+        <div class="card-body">
+          <form>
+            <h6 class="heading-small text-muted mb-4">User information</h6>
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-username">Username</label>
+                    <input type="text" id="input-username" class="form-control" placeholder="Username" value="{{ customer.username }}" readonly>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-email">Email address</label>
+                    <input type="email" id="input-email" class="form-control" placeholder="Email" value="{{ customer.email }}" readonly>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-first-name">First name</label>
+                    <input type="text" id="input-first-name" class="form-control" placeholder="First name" value="{{ customer.first_name }}" readonly>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-last-name">Last name</label>
+                    <input type="text" id="input-last-name" class="form-control" placeholder="Last name" value="{{ customer.last_name }}" readonly>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="custom-control custom-control-alternative custom-checkbox ml-3">
+                  <input class="custom-control-input" id=" customCheckLogin" type="checkbox" {{ customer.is_staff|yesno:"checked, " }} disabled>
+                  <label class="custom-control-label" for=" customCheckLogin">
+                    <span class="text-muted">Is staff</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <hr class="my-4" />
+            <h6 class="heading-small text-muted mb-4">Customer`s cars</h6>
+            <div class="pl-lg-4">
+              {% for car in customer.cars.all %}
+                <div class="row">
+                  <div class="custom-control custom-control-alternative custom-checkbox">
+                    <input class="custom-control-input" id=" customCheckLogin" type="checkbox" checked disabled>
+                    <label class="custom-control-label" for=" customCheckLogin">
+                      <span class="text-muted">{{ car }}</span>
+                    </label>
+                  </div>
+                </div>
+              {% empty %}
+                <span class="description">No cars</span>
+              {% endfor %}
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

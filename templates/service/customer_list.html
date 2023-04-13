@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  <div class="header bg-gradient-dark py-6 py-lg-5">
+    <div class="container-fluid">
+      <div class="header-body text-left mb-8">
+        <div class="row">
+          <div class="col-lg-12 col-md-6">
+            <h1 class="text-white">
+              <a class="text-white" href="">
+                Customers list
+              </a>
+              <a href="{% url 'service:customer-create' %}" class="btn btn-primary link-to-page">
+                +
+              </a>
+            </h1>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="separator separator-bottom separator-skew zindex-100">
+      <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <polygon class="fill-secondary" points="0 100 2560 0 2560 100"></polygon>
+      </svg>
+    </div>
+  </div>
+
+  <div class="mt--9">
+    {% block search %}
+      {% include "includes/search_form.html" %}
+    {% endblock %}
+  </div>
+
+  <div class="container-fluid mt--4">
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-header border-0">
+            <h3 class="mb-0">Customers</h3>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table align-items-center table-flush">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col" class="sort" data-sort="username">Username</th>
+                  <th scope="col" class="sort" data-sort="first_name">First name</th>
+                  <th scope="col" class="sort" data-sort="last_name">Last name</th>
+                  <th scope="col" class="sort" data-sort="ID">ID</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+
+              {% if customer_list %}
+                {% for customer in customer_list %}
+                  <tr>
+                    <td class="username">
+                      <span class="text-sm">
+                        {{ customer.username }}
+                      </span>
+                    </td>
+                    <td class="first_name">
+                      <span class="text-sm">
+                        {{ customer.first_name }}
+                      </span>
+                    </td>
+                    <td class="last_name">
+                      <span class="text-sm">
+                        {{ customer.last_name }}
+                      </span>
+                    </td>
+                    <td class="ID">
+                      <span class="mb-0 text-sm">{{ customer.id }}</span>
+                    </td>
+                    <td class="text-right">
+                      <div class="dropdown">
+                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <i class="fas fa-ellipsis-v"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                          <a class="dropdown-item" href="{% url 'service:customer-detail' pk=customer.id %}">Detail</a>
+                          <a class="dropdown-item" href="{% url 'service:customer-update' pk=customer.id %}">Update</a>
+                          <a class="dropdown-item" href="{% url 'service:customer-delete' pk=customer.id %}">Delete</a>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                {% endfor %}
+              {% else %}
+                <p class="text-center text-primary ">There are no customers</p>
+              {% endif %}
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block javascripts %}
+  <script src="/static/js/jquery.min.js"></script>
+  <script src="/static/js/bootstrap.bundle.min.js"></script>
+  <script src="/static/js/js.cookie.js"></script>
+  <script src="/static/js/jquery.scrollbar.min.js"></script>
+  <script src="/static/js/jquery-scrollLock.min.js"></script>
+  <script src="/static/js/argon.js?v=1.2.0"></script>
+{% endblock %}

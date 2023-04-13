@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+  <div class="header bg-gradient-dark py-6 py-lg-5">
+    <div class="container-fluid">
+      <div class="header-body text-left mb-8">
+        <div class="row">
+          <div class="col-lg-12 col-md-6">
+            <h1 class="text-white">
+              <a class="text-white" href="">
+                Order # {{ order.id }} created at {{ order.created_at }}
+              </a>
+              <a href="{% url 'service:order-delete' pk=order.id %}" class="btn btn-danger link-to-page">
+                Delete
+              </a>
+              <a href="{% url 'service:order-update' pk=order.id %}" class="btn btn-primary link-to-page">
+                Update
+              </a>
+            </h1>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="separator separator-bottom separator-skew zindex-100">
+      <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <polygon class="fill-secondary" points="0 0 2560 100 0 100"></polygon>
+      </svg>
+    </div>
+  </div>
+
+  <div class="container-fluid mt--8">
+    <div class="col-xl-12 order-xl-1">
+      <div class="card">
+        <div class="card-body">
+          <h6 class="heading-small text-muted mb-4">Order information</h6>
+          <div class="pl-lg-4">
+            <div class="row">
+              <div class="col-lg-5">
+                <div class="form-group">
+                  <label class="form-control-label" for="customer">Customer</label>
+                  <input type="text" id="customer" class="form-control" placeholder="customer" value="{{ order.customer.first_name }} {{ order.customer.last_name }} ({{ order.customer.username }})" readonly>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label class="form-control-label" for="car">Car</label>
+                  <input type="email" id="car" class="form-control" placeholder="Car" value="{{ order.car }}" readonly>
+                </div>
+              </div>
+              <div class="col-lg-3">
+                <div class="form-group">
+                  <label class="form-control-label" for="mileage">Mileage</label>
+                  <input type="email" id="mileage" class="form-control" placeholder="Mileage" value="{{ order.mileage }}" readonly>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr class="my-4" />
+          <h6 class="heading-small text-muted mb-4">
+            Rows
+            <a href="{% url 'service:order-row-create' pk=order.id %}" class="btn btn-sm btn-primary link-to-page">
+              Add row
+            </a>
+          </h6>
+          <div class="table-responsive">
+            <table class="table align-items-center table-flush">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col" class="sort">#</th>
+                  <th scope="col" class="sort">Part</th>
+                  <th scope="col" class="sort">Quantity</th>
+                  <th scope="col" class="sort">Sum</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+
+              {% for row in order.order_rows.all %}
+                <tr>
+                  <td>
+                    <span class="text-sm">
+                      {{ row.id }}
+                    </span>
+                  </td>
+                  <td>
+                    <span class="text-sm">
+                      {{ row.part }}
+                    </span>
+                  </td>
+                  <td>
+                    <span class="text-sm">
+                      {{ row.quantity }}
+                    </span>
+                  </td>
+                  <td>
+                    <span class="text-sm">
+                      {{ row.sum }}
+                    </span>
+                  </td>
+                  <td>
+                    <form method="POST" action="{% url 'service:order-row-delete' pk=row.id %}">
+                      {% csrf_token %}
+                      <input name="_method" type="hidden" value="DELETE">
+                      <button type="submit" class="btn btn-sm btn-danger btn-flat show_confirm" data-toggle="tooltip" title='Delete'>Delete row</button>
+                    </form>
+                  </td>
+                </tr>
+              {% endfor %}
+            </table>
+          </div>
+          {% block new_row %}{% endblock %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block javascripts %}
+  <script type="text/javascript" src="{% static 'js/confirm_delete_row.js' %}"></script>
+{% endblock %}
