@@ -28,7 +28,7 @@ class Car(models.Model):
 
 
 class Customer(AbstractUser):
-    cars = models.ManyToManyField(Car, related_name="customers")
+    cars = models.ManyToManyField(Car, related_name="customers", blank=True)
 
     class Meta:
         ordering = ["-is_staff", "username"]
