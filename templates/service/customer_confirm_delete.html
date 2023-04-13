@@ -1,11 +1,37 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>Delete customer {{ object }} ?</h1>
-  <form action="" method="post">
-    {% csrf_token %}
 
-    <input class="btn btn-danger" type="submit" value="Yes, delete">
-    <input class="btn btn-success" type="button" value="Cancel" onclick="history.back()">
-  </form>
+  <div class="header bg-gradient-dark py-6 py-lg-5">
+    <div class="container-fluid">
+      <div class="header-body text-left mb-7">
+        <div class="row">
+          <div class="col-lg-12 col-md-6">
+            <h1 class="text-white">
+              <a class="text-white" href="">
+
+                <form action="" method="post">
+                  {% csrf_token %}
+
+                  <a class="text-white" href="">
+                    Delete customer {{ object }} ?
+                  </a>
+
+                  <input class="btn btn-danger" type="submit" value="Yes, delete">
+                  <input class="btn btn-success" type="button" value="Cancel" onclick="history.back()">
+                </form>
+
+              </a>
+            </h1>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="separator separator-bottom separator-skew zindex-100">
+      <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <polygon class="fill-secondary" points="2560 0 2560 100 0 100"></polygon>
+      </svg>
+    </div>
+  </div>
+
 {% endblock %}

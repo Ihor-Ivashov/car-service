@@ -15,7 +15,7 @@
               <a href="{% url 'service:order-delete' pk=order.id %}" class="btn btn-danger link-to-page">
                 Delete
               </a>
-              <a href="{% url 'service:order-update' pk=order.id %}" class="btn btn-secondary link-to-page">
+              <a href="{% url 'service:order-update' pk=order.id %}" class="btn btn-primary link-to-page">
                 Update
               </a>
             </h1>
@@ -29,7 +29,6 @@
       </svg>
     </div>
   </div>
-
 
   <div class="container-fluid mt--8">
     <div class="col-xl-12 order-xl-1">
@@ -115,6 +114,7 @@
       </div>
     </div>
   </div>
+
 {% endblock %}
 
 {% block javascripts %}
