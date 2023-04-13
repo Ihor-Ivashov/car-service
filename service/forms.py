@@ -27,7 +27,8 @@ class LoginForm(forms.Form):
 class CustomerForm(UserCreationForm):
     cars = forms.ModelMultipleChoiceField(
         queryset=Car.objects.filter(customers=None),
-        widget=forms.CheckboxSelectMultiple
+        widget=forms.CheckboxSelectMultiple,
+        required=False
     )
 
     class Meta(UserCreationForm.Meta):
@@ -35,11 +36,12 @@ class CustomerForm(UserCreationForm):
         fields = UserCreationForm.Meta.fields + (
             "first_name",
             "last_name",
+            "email",
             "cars",
         )
 
     def save(self, commit=True):
-        user = super(CustomerForm, self).save(commit=False)
+        user = super(CustomerForm, self).save()
         user.cars.set(self.cleaned_data.get("cars"))
         user.save()
         return user
@@ -48,7 +50,8 @@ class CustomerForm(UserCreationForm):
 class CustomerUpdateForm(forms.ModelForm):
     cars = forms.ModelMultipleChoiceField(
         queryset=None,
-        widget=forms.CheckboxSelectMultiple
+        widget=forms.CheckboxSelectMultiple,
+        required=False
     )
 
     def __init__(self, pk,  *args, **kwargs):
@@ -62,6 +65,7 @@ class CustomerUpdateForm(forms.ModelForm):
         fields = UserCreationForm.Meta.fields + (
             "first_name",
             "last_name",
+            "email",
             "cars",
         )
 
