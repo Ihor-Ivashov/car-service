@@ -13,7 +13,7 @@
                 {% csrf_token %}
 
                 <a class="text-white" href="">
-                  Delete order {{ object }} ?
+                  Delete order # {{ order.id }} created at {{ order.created_at }}
                 </a>
 
                 <input class="btn btn-danger" type="submit" value="Yes, delete">

@@ -9,7 +9,7 @@
           <div class="col-lg-12 col-md-6">
             <h1 class="text-white">
               <a class="text-white" href="">
-                Username: {{ customer.username }}
+                {{ customer.first_name }} {{ customer.last_name }} ({{ customer.username }})
               </a>
               <a href="{% url 'service:customer-delete' pk=customer.id %}" class="btn btn-danger link-to-page">
                 Delete
