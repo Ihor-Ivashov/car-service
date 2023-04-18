@@ -56,7 +56,7 @@ class CustomerUpdateForm(forms.ModelForm):
 
     def __init__(self, pk,  *args, **kwargs):
         super(CustomerUpdateForm, self).__init__(*args, **kwargs)
-        self.fields.get("cars").queryset = Car.objects.filter(
+        self.fields["cars"].queryset = Car.objects.filter(
             Q(customers=None) | Q(customers__id=pk)
         )
 

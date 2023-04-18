@@ -8,11 +8,11 @@ from django.urls import reverse
 class Car(models.Model):
     model = models.CharField(max_length=255)
     registration_number = models.CharField(max_length=10)
-    VIN = models.CharField(max_length=17)
+    vin = models.CharField(max_length=17)
 
     class Meta:
         constraints = [
-            UniqueConstraint(fields=["VIN"], name="unique_VIN"),
+            UniqueConstraint(fields=["vin"], name="unique_vin"),
             UniqueConstraint(
                 fields=["registration_number"],
                 name="unique_registration_number"
@@ -78,7 +78,7 @@ class Order(models.Model):
         return reverse("service:order-detail", kwargs={"pk": self.pk})
 
 
-class OrderRow(models.Model):
+class OrderItem(models.Model):
     order = models.ForeignKey(
         Order,
         on_delete=models.CASCADE,
