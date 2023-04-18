@@ -60,7 +60,7 @@
           <hr class="my-4" />
           <h6 class="heading-small text-muted mb-4">
             Rows
-            <a href="{% url 'service:order-row-create' pk=order.id %}" class="btn btn-sm btn-primary link-to-page">
+            <a href="{% url 'service:order-item-create' pk=order.id %}" class="btn btn-sm btn-primary link-to-page">
               Add row
             </a>
           </h6>
@@ -99,7 +99,7 @@
                     </span>
                   </td>
                   <td>
-                    <form method="POST" action="{% url 'service:order-row-delete' pk=row.id %}">
+                    <form method="POST" action="{% url 'service:order-item-delete' pk=row.id %}">
                       {% csrf_token %}
                       <input name="_method" type="hidden" value="DELETE">
                       <button type="submit" class="btn btn-sm btn-danger btn-flat show_confirm" data-toggle="tooltip" title='Delete'>Delete row</button>

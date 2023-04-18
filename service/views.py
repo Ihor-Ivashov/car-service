@@ -1,8 +1,7 @@
 from django.contrib.auth import get_user_model, authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Q, QuerySet
-from django.http import HttpResponseRedirect, HttpResponseBadRequest, \
-    JsonResponse
+from django.db.models import Q, QuerySet, F
+from django.http import HttpResponseBadRequest, JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views import generic
@@ -10,7 +9,7 @@ from django.views import generic
 from service.forms import (CustomerForm, CustomerUpdateForm, CarsSearchForm,
                            PartsCustomersSearchForm, OrdersSearchForm,
                            LoginForm)
-from service.models import (Customer, Car, Order, Part, OrderRow)
+from service.models import (Customer, Car, Order, Part, OrderItem)
 
 
 def index(request):
@@ -210,13 +209,13 @@ class OrderDeleteView(LoginRequiredMixin, generic.DeleteView):
     success_url = reverse_lazy("service:order-list")
 
 
-class OrderRowCreateView(LoginRequiredMixin, generic.CreateView):
-    model = OrderRow
+class OrderItemCreateView(LoginRequiredMixin, generic.CreateView):
+    model = OrderItem
     fields = "__all__"
-    template_name = "service/order_row_form.html"
+    template_name = "service/order_item_form.html"
 
     def get_context_data(self, *, object_list=None, **kwargs) -> dict:
-        context = super(OrderRowCreateView, self).get_context_data(**kwargs)
+        context = super(OrderItemCreateView, self).get_context_data(**kwargs)
         context["order"] = Order.objects.get(pk=self.kwargs["pk"])
         context["segment"] = "order_list"
         return context
@@ -225,13 +224,12 @@ class OrderRowCreateView(LoginRequiredMixin, generic.CreateView):
         return {"order": self.kwargs["pk"]}
 
 
-def order_row_delete(request, pk):
-    row = OrderRow.objects.get(pk=pk)
-    order_id = row.order_id
-    row.delete()
-    return HttpResponseRedirect(
-        reverse("service:order-detail", kwargs={"pk": order_id})
-    )
+class OrderItemDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = OrderItem
+
+    def get_success_url(self):
+        return reverse("service:order-detail",
+                       kwargs={'pk': self.object.order_id})
 
 
 def get_customer_cars(request):
@@ -239,12 +237,11 @@ def get_customer_cars(request):
         customer_id = request.POST.get("customer_field")
 
         cars = []
-        queryset = Car.objects.filter(customers__id=int(customer_id))
+        queryset = Car.objects.filter(
+            customers__id=int(customer_id)
+        ).annotate(name=F("model")).values("id", "name")
         for car in queryset:
-            cars.append({
-                "id": car.id,
-                "name": car.model
-            })
+            cars.append(car)
 
         response_data = {"cars": cars}
         return JsonResponse(response_data)
