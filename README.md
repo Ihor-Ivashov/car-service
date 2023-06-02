@@ -25,4 +25,4 @@ python manage.py runserver
 
 
 ## Demo
-![Demo](home.png)
+![Demo](static/img/home.png)
