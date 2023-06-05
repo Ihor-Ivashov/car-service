@@ -6,7 +6,7 @@ Django project for managing car service
 
 
 ## Try it
-[Car project deployed on ](LINK)
+[Car project deployed on ](https://car-service-f92j.onrender.com/)
 
 
 ## Installing / Getting started
