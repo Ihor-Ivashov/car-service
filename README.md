@@ -6,14 +6,13 @@ Django project for managing car service
 
 
 ## Try it
-[Car project deployed on ](https://car-service-f92j.onrender.com/)
+[Car project deployed on Render.com](https://car-service-f92j.onrender.com/)
 
 you can use next credentionals:
-
+```shell
 login: user
-
 password: 123use321
-
+```
 
 ## Installing / Getting started
 
